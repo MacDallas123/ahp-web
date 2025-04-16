@@ -1,0 +1,101 @@
+[
+    {
+        "name": "Iphone 12",
+        "memory": 4,
+        "storage": 64,
+        "cpu": 3.1,
+        "price": 250000,
+        "brand": "Apple",
+        "image": ""
+    },
+    {
+        "name": "Itel A56",
+        "memory": 1,
+        "storage": 16,
+        "cpu": 1.3,
+        "price": 40000,
+        "brand": "Itel",
+        "image": ""
+    },
+    {
+        "name": "Tecno Camon 12",
+        "memory": 4,
+        "storage": 64,
+        "cpu": 2.0,
+        "price": 60000,
+        "brand": "Tecno",
+        "image": ""
+    },
+    {
+        "name": "Infinix Hot 10",
+        "memory": 4,
+        "storage": 128,
+        "cpu": 2.0,
+        "price": 70000,
+        "brand": "Infinix",
+        "image": ""
+    },
+    {
+        "name": "Huawei P30",
+        "memory": 6,
+        "storage": 128,
+        "cpu": 2.6,
+        "price": 150000,
+        "brand": "Huawei",
+        "image": ""
+    },
+    {
+        "name": "Google Pixel 7",
+        "memory": 8,
+        "storage": 128,
+        "cpu": 2.85,
+        "price": 250000,
+        "brand": "Google",
+        "image": ""
+    },
+    {
+        "name": "Xiaomei Redmi Note 10",
+        "memory": 6,
+        "storage": 128,
+        "cpu": 2.2,
+        "price": 80000,
+        "brand": "Xiaomei",
+        "image": ""
+    },
+    {
+        "name": "Samsung Galaxy S22",
+        "memory": 8,
+        "storage": 256,
+        "cpu": 3.0,
+        "price": 300000,
+        "brand": "Samsung",
+        "image": ""
+    },
+    {
+        "name": "Motorola Razr+",
+        "memory": 8,
+        "storage": 256,
+        "cpu": 2.8,
+        "price": 350000,
+        "brand": "Motorola",
+        "image": ""
+    },
+    {
+        "name": "Iphone Xr",
+        "memory": 3,
+        "storage": 64,
+        "cpu": 2.5,
+        "price": 180000,
+        "brand": "Apple",
+        "image": ""
+    },
+    {
+        "name": "Samsung Galaxy Note 10",
+        "memory": 8,
+        "storage": 256,
+        "cpu": 2.7,
+        "price": 220000,
+        "brand": "Samsung",
+        "image": ""
+    }
+]
