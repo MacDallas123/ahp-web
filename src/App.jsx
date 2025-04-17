@@ -11,7 +11,7 @@ let phoneBrands = [
   { id: 2, name: "Samsung", preference: 15 },
   { id: 3, name: "Google", preference: 13 },
   { id: 4, name: "Itel", preference: 11 },
-  { id: 5, name: "Xiaomi", preference: 9 },
+  { id: 5, name: "Xiaomei", preference: 9 },
   { id: 6, name: "Huawei", preference: 7 },
   { id: 7, name: "Tecno", preference: 5 },
   { id: 8, name: "Infinix", preference: 3 },
@@ -27,7 +27,7 @@ const App = () => {
   useEffect(() => {
     console.log("UPDATED BRANDS PREFERENCES", brands);
   }, [brands])
-  
+
   return (
     <div className="items-center flex flex-col h-screen bg-gray-100 overflow-auto">
       <Header />
