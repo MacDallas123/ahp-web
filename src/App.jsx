@@ -2,7 +2,7 @@ import Header from "./components/layouts/Header";
 import './App.css';
 import { FaPaperclip } from "react-icons/fa";
 import SortableList from "./components/layouts/SortableList";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PairWiseTable from "./components/layouts/PairwiseTable";
 import AhpProcess from "./components/layouts/AhpProcess";
 
@@ -24,6 +24,10 @@ const App = () => {
   const [ brands, setBrands ] = useState(phoneBrands);
   const [ pairwiseMatrix, setPairwiseMatrix ] = useState([]);
 
+  useEffect(() => {
+    console.log("UPDATED BRANDS PREFERENCES", brands);
+  }, [brands])
+  
   return (
     <div className="items-center flex flex-col h-screen bg-gray-100 overflow-auto">
       <Header />
@@ -49,7 +53,7 @@ const App = () => {
           <FaPaperclip className="mr-3"/> Utilisation de AHP
         </h1>
 
-        <AhpProcess criterias={criterias} pairwiseMatrix={pairwiseMatrix} />
+        <AhpProcess criterias={criterias} brands={brands} pairwiseMatrix={pairwiseMatrix} />
       </div>
     </div>
   );

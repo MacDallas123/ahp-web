@@ -13,7 +13,7 @@ const RI_VALUES = {
   10: 1.49
 };
 
-const ConsistencyCalculation = ({ criterias, criteriaWeights, rowSums }) => {
+const ConsistencyCalculation = ({ criterias, criteriaWeights,  rowSums }) => {
   // Calcul des lambdas individuels
   const lambdas = criterias.map((_, index) => {
     const weight = parseFloat(criteriaWeights[index]) || 1;

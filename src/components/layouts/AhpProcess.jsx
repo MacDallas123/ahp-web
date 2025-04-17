@@ -5,7 +5,7 @@ import NormalizedMatrix from './NormalizedMatrix';
 import ConsistencyCalculation from './ConsistencyCalculation';
 import AlternativeScoring from './AlternativeScoring';
 
-const AhpProcess = ({ criterias, pairwiseMatrix }) => {
+const AhpProcess = ({ criterias, brands, pairwiseMatrix }) => {
   const [columnSums, setColumnSums] = useState([]);
   const [normalizedMatrix, setNormalizedMatrix] = useState([]);
   const [criteriaWeights, setCriteriaWeights] = useState([]);
@@ -94,10 +94,13 @@ const AhpProcess = ({ criterias, pairwiseMatrix }) => {
       <ConsistencyCalculation 
         criterias={criterias} 
         criteriaWeights={criteriaWeights} 
-        rowSums={rowSums} 
+        rowSums={rowSums}
       />
 
-      <AlternativeScoring criteriaWeights={criteriaWeights} />
+      <AlternativeScoring 
+        criteriaWeights={criteriaWeights}
+        brands={brands}
+      />
     </div>
   );
 };

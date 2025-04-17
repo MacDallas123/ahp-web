@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import alternativesData from '../../assets/phones.json';
 import { useEffect, useState } from 'react';
 
-const AlternativeScoring = ({ criteriaWeights }) => {
+const AlternativeScoring = ({ criteriaWeights, brands }) => {
 
     const [ scoredAlternatives, setScoredAlternatives ] = useState([]);
     const [ bestAlternative, setBestAlternative ] = useState(null);
@@ -16,14 +16,12 @@ const AlternativeScoring = ({ criteriaWeights }) => {
 
   useEffect(() => {
     // Préparer les données
-    const calculateScores = () => {
-        // Trouver les min/max pour chaque critère
+    /*const calculateScores = () => {
         const criteriaExtremes = {
         memory: { min: Math.min(...alternativesData.map(a => a.memory)), max: Math.max(...alternativesData.map(a => a.memory)) },
         storage: { min: Math.min(...alternativesData.map(a => a.storage)), max: Math.max(...alternativesData.map(a => a.storage)) },
         cpu: { min: Math.min(...alternativesData.map(a => a.cpu)), max: Math.max(...alternativesData.map(a => a.cpu)) },
         price: { min: Math.min(...alternativesData.map(a => a.price)), max: Math.max(...alternativesData.map(a => a.price)) },
-        // Pour la marque, nous utiliserons les préférences que vous avez déjà définies
         };
 
         // Calculer les scores pour chaque alternative
@@ -62,12 +60,71 @@ const AlternativeScoring = ({ criteriaWeights }) => {
             score
         };
         });
-    };
+    };*/
 
+    const calculateScores = () => {
+
+      const memoriesScores = alternativesData.map((alt) => {
+          return alt.memory * criteriaWeights[0];
+      });
+
+      const storageScores = alternativesData.map((alt) => {
+        return alt.storage * criteriaWeights[1];
+      });
+
+      const cpuScores = alternativesData.map((alt) => {
+        return alt.cpu * criteriaWeights[2];
+      });
+
+      const priceScores = alternativesData.map((alt) => {
+        return alt.price * criteriaWeights[3];
+      });
+
+      const brandScores = alternativesData.map((alt) => {
+        const brandPreference = brands.find((brand) => brand.name.toLowerCase().trim() === alt.brand.toLowerCase().trim())?.preference || 0;
+        return brandPreference * criteriaWeights[4];
+      });
+
+      const alternativesScores = [];
+      const n = alternativesData.length;
+      for(let i = 0; i < alternativesData.length; i++)
+      {
+        const average = (memoriesScores[i] + storageScores[i] + cpuScores[i] + priceScores[i] + brandScores[i]) / n;
+        alternativesScores.push(average);
+      }
+
+      /*const maxAverage = alternativesScores.sort((a, b) => b - a)[0];
+      const bestAlternativeIndex = alternativesScores.indexOf(maxAverage);
+
+      setBestAlternative(alternativesData[bestAlternativeIndex]);
+      console.log({ memoriesScores, storageScores, cpuScores, priceScores, brandScores });*/
+
+      return alternativesData.map((alternative, index) => {
+        return {
+          ...alternative,
+          subScores: {
+            memory: memoriesScores[index],
+            storage: storageScores[index],
+            cpu: cpuScores[index],
+            price: priceScores[index],
+            brand: brandScores[index]
+          },
+          score: alternativesScores[index]
+        }
+      });
+    }
+
+    //calculateScores();
     setScoredAlternatives(calculateScores());
-    setBestAlternative([...scoredAlternatives].sort((a, b) => b.score - a.score)[0]);
+
+    console.log("BRANDS", brands);
+    console.log("ALTERNATIVES", alternativesData);
   }, [criteriaWeights]);
 
+  useEffect(() => {
+    console.log("SCORED ALTERNATIVES", scoredAlternatives);
+    setBestAlternative([...scoredAlternatives].sort((a, b) => b.score - a.score)[0]);
+  }, [scoredAlternatives])
   //const scoredAlternatives = calculateScores();
   //const bestAlternative? = [...scoredAlternatives].sort((a, b) => b.score - a.score)[0];
 
@@ -92,12 +149,12 @@ const AlternativeScoring = ({ criteriaWeights }) => {
             {scoredAlternatives.map((alt, index) => (
               <tr key={index} className={alt.name === bestAlternative?.name ? 'bg-green-50 font-medium' : ''}>
                 <td className="border px-4 py-2">{alt.name}</td>
-                <td className="border px-4 py-2 text-center">{alt.normalized.memory.toFixed(3)}</td>
-                <td className="border px-4 py-2 text-center">{alt.normalized.storage.toFixed(3)}</td>
-                <td className="border px-4 py-2 text-center">{alt.normalized.cpu.toFixed(3)}</td>
-                <td className="border px-4 py-2 text-center">{alt.normalized.price.toFixed(3)}</td>
-                <td className="border px-4 py-2 text-center">{alt.normalized.brand.toFixed(3)}</td>
-                <td className="border px-4 py-2 text-center font-bold">{alt.score}</td>
+                <td className="border px-4 py-2 text-center">{alt.subScores.memory.toFixed(3)}</td>
+                <td className="border px-4 py-2 text-center">{alt.subScores.storage.toFixed(3)}</td>
+                <td className="border px-4 py-2 text-center">{alt.subScores.cpu.toFixed(3)}</td>
+                <td className="border px-4 py-2 text-center">{alt.subScores.price.toFixed(3)}</td>
+                <td className="border px-4 py-2 text-center">{alt.subScores.brand.toFixed(3)}</td>
+                <td className="border px-4 py-2 text-center font-bold">{alt.score.toFixed(3)}</td>
               </tr>
             ))}
           </tbody>
@@ -109,7 +166,7 @@ const AlternativeScoring = ({ criteriaWeights }) => {
         <div className="flex items-center">
           <div className="mr-4 font-bold text-xl">{bestAlternative?.name}</div>
           <div className="ml-auto bg-blue-100 px-3 py-1 rounded-full text-blue-800">
-            Score: {bestAlternative?.score}
+            Score: {bestAlternative?.score.toFixed(3)}
           </div>
         </div>
         <div className="mt-2 grid grid-cols-2 gap-2">
@@ -124,7 +181,8 @@ const AlternativeScoring = ({ criteriaWeights }) => {
 };
 
 AlternativeScoring.propTypes = {
-  criteriaWeights: PropTypes.array.isRequired
+  criteriaWeights: PropTypes.array.isRequired,
+  brands: PropTypes.object.isRequired
 };
 
 export default AlternativeScoring;

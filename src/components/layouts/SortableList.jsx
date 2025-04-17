@@ -5,13 +5,13 @@ import PropTypes from 'prop-types';
 const SortableList = ({ brands, setBrands }) => {
     const [selectedId, setSelectedId] = useState(null);
   
-    useEffect(() => {
+    /*useEffect(() => {
       const updatedBrands = brands.map((brand, index) => ({
         ...brand,
         preference: calculatePreference(index, brands.length)
       }));
       setBrands(updatedBrands);
-    }, [brands.length]);
+    }, [brands.length]);*/
   
     const calculatePreference = (index, total) => {
       return 2 * (total - index) - 1;
@@ -25,7 +25,14 @@ const SortableList = ({ brands, setBrands }) => {
       
       const newItems = [...brands];
       [newItems[index], newItems[index - 1]] = [newItems[index - 1], newItems[index]];
-      setBrands(newItems);
+
+      //setBrands(newItems);
+      const updatedItems = newItems.map((item, index) => ({
+        ...item,
+        preference: calculatePreference(index, newItems.length)
+      }));
+
+      setBrands(updatedItems);
     };
   
     const moveDown = () => {
@@ -36,7 +43,14 @@ const SortableList = ({ brands, setBrands }) => {
       
       const newItems = [...brands];
       [newItems[index], newItems[index + 1]] = [newItems[index + 1], newItems[index]];
-      setBrands(newItems);
+      //setBrands(newItems);
+      
+      const updatedItems = newItems.map((item, index) => ({
+        ...item,
+        preference: calculatePreference(index, newItems.length)
+      }));
+
+      setBrands(updatedItems);
     };
   
     return (
